@@ -320,6 +320,8 @@ public class ChooseLockPattern extends Activity implements View.OnClickListener{
         mLockPatternView.setOnPatternListener(mChooseNewLockPatternListener);
         mLockPatternView.setTactileFeedbackEnabled(
                 mChooseLockSettingsHelper.utils().isTactileFeedbackEnabled());
+        mLockPatternView.setEmergencyButtonEnabled(
+                mChooseLockSettingsHelper.utils().isEmergencyButtonEnabled());
 
         mFooterText = (TextView) findViewById(R.id.footerText);
 
@@ -488,6 +490,7 @@ public class ChooseLockPattern extends Activity implements View.OnClickListener{
         if (lockVirgin) {
             utils.setVisiblePatternEnabled(true);
             utils.setTactileFeedbackEnabled(false);
+            utils.setEmergencyButtonEnabled(true);
 
             // It's the first time we choose a lock pattern, so set the "disable
             // lockscreen on security option" to the default value here. All other security

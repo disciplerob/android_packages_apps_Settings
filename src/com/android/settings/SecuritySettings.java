@@ -69,6 +69,7 @@ public class SecuritySettings extends PreferenceActivity implements OnPreference
     private static final String KEY_LOCK_ENABLED = "lockenabled";
     private static final String KEY_VISIBLE_PATTERN = "visiblepattern";
     private static final String KEY_TACTILE_FEEDBACK_ENABLED = "unlock_tactile_feedback";
+    private static final String KEY_EMERGENCY_BUTTON_ENABLED = "unlock_emergency_button";
 
     // Encrypted File Systems constants
     private static final String PROPERTY_EFS_ENABLED = "persist.security.efs.enabled";
@@ -76,6 +77,7 @@ public class SecuritySettings extends PreferenceActivity implements OnPreference
 
     private CheckBoxPreference mVisiblePattern;
     private CheckBoxPreference mTactileFeedback;
+    private CheckBoxPreference mEmergencyButton;
 
     private CheckBoxPreference mShowPassword;
 
@@ -228,6 +230,9 @@ public class SecuritySettings extends PreferenceActivity implements OnPreference
         // tactile feedback. Should be common to all unlock preference screens.
         mTactileFeedback = (CheckBoxPreference) pm.findPreference(KEY_TACTILE_FEEDBACK_ENABLED);
 
+        // emergency button. Should be common to all unlock preference screens.
+        mEmergencyButton = (CheckBoxPreference) pm.findPreference(KEY_EMERGENCY_BUTTON_ENABLED);
+
         int activePhoneType = TelephonyManager.getDefault().getPhoneType();
 
         // do not display SIM lock for CDMA phone
@@ -294,6 +299,9 @@ public class SecuritySettings extends PreferenceActivity implements OnPreference
         if (mTactileFeedback != null) {
             mTactileFeedback.setChecked(lockPatternUtils.isTactileFeedbackEnabled());
         }
+        if (mEmergencyButton != null) {
+            mEmergencyButton.setChecked(lockPatternUtils.isEmergencyButtonEnabled());
+        }
 
         mShowPassword.setChecked(Settings.System.getInt(getContentResolver(),
                 Settings.System.TEXT_SHOW_PASSWORD, 1) != 0);
@@ -316,6 +324,8 @@ public class SecuritySettings extends PreferenceActivity implements OnPreference
             lockPatternUtils.setVisiblePatternEnabled(isToggled(preference));
         } else if (KEY_TACTILE_FEEDBACK_ENABLED.equals(key)) {
             lockPatternUtils.setTactileFeedbackEnabled(isToggled(preference));
+        } else if (KEY_EMERGENCY_BUTTON_ENABLED.equals(key)) {
+            lockPatternUtils.setEmergencyButtonEnabled(isToggled(preference));
         } else if (preference == mShowPassword) {
             Settings.System.putInt(getContentResolver(), Settings.System.TEXT_SHOW_PASSWORD,
                     mShowPassword.isChecked() ? 1 : 0);

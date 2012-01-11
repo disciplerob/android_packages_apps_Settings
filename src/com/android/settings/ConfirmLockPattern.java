@@ -105,6 +105,7 @@ public class ConfirmLockPattern extends Activity {
         }
 
         mLockPatternView.setTactileFeedbackEnabled(mLockPatternUtils.isTactileFeedbackEnabled());
+        mLockPatternView.setEmergencyButtonEnabled(mLockPatternUtils.isEmergencyButtonEnabled());
         mLockPatternView.setOnPatternListener(mConfirmExistingLockPatternListener);
         updateStage(Stage.NeedToUnlock);
 
